@@ -32,7 +32,7 @@ init_db() # Server start hote hi chalega
 # ========================================================
 
 # Load questions from JSON file
-with open('../questions.json', 'r', encoding='utf-8') as f: # '../' hata diya kyunki same folder me hai ../ ka matlab: backend folder se ek step bahar jaa, wahan questions.json milega.
+with open('../questions.json', 'r', encoding='utf-8') as f: 
     questions_data = json.load(f)
 
 # ==========================================
