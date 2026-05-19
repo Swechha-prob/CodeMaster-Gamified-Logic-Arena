@@ -44,7 +44,7 @@ JS NEW/
 ├── About.html                # Platform features and showcase info
 ├── CodeMaster Pro.jpeg       # Project logo / Favicon asset
 ├── Leaderboard.html          # Global top 10 scores ranking table
-├── Login.html                # 3D interactive login portal with domain validation
+├── index.html                # 3D interactive login portal with domain validation
 ├── Main.html                 # Main dashboard layout with dynamic language cards
 ├── questions.json            # Base dataset of 62 quiz questions + explanations
 ├── Quiz.html                 # Core quiz container layout shell

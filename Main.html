@@ -75,14 +75,14 @@
   //This program checks if you're logged in. If not, it sends you to the login page.
   const user = getData("codemaster_user");
   if (!user) { 
-    window.location.href = "Login.html"; 
+    window.location.href = "index.html"; 
   }
 
   // Session Management: Clear user data and redirect
   //This program removes your login info and sends you to the login page.
   function logout() {
     sessionStorage.removeItem("codemaster_user");
-    window.location.href = "Login.html";
+    window.location.href = "index.html";
   }
 
   // Logic to calculate best scores: O(n) efficiency pass through leaderboard data

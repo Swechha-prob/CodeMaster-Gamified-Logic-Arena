@@ -20,7 +20,7 @@ try {
 
 if (!user) {
     alert("Do Login first!");
-    window.location.href = "Login.html";
+    window.location.href = "index.html";
 }
 
 const langId = localStorage.getItem("selectedLang") || "html";

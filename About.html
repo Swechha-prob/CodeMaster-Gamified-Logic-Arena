@@ -62,7 +62,7 @@
 
   // Guard Clause for Authentication: Redirect if no user session exists
   if (!user) {
-    window.location.href = "Login.html";
+    window.location.href = "index.html";
   } else {
 
     // 2. PERFORMANCE OPTIMIZED DOM UPDATES
@@ -75,10 +75,10 @@
   }
 
   // 3. MODULAR LOGOUT FUNCTION
-  // Cleans up local session and returns to login
+  // Cleans up local session and returns to Login
   function logout() {
     sessionStorage.removeItem("codemaster_user");
-    window.location.href = "Login.html";
+    window.location.href = "index.html";
   }
 
   // 4. DATA MODEL (MODULAR ARRAY)
