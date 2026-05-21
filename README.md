@@ -54,11 +54,11 @@ Stores the global registry of all profile registrations local to the browser cli
     "createdAt": "2026-05-21T13:54:05.000Z"
   }
 ]
+```
 
+## FILES 
 
-FILES 
-
-CodeMaster Gamified Logic Arena/
+# CodeMaster Gamified Logic Arena/
 ├── About.html          # Info page detailing rules, platform mechanics, and references.
 ├── CodeMaster Pro.jpeg # Branding identity asset used for layout images and favicons
 ├── Leaderboard.html    # Global rankings hub featuring the top-100 table and 3D top-3 podium
