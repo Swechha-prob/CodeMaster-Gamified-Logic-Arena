@@ -56,9 +56,8 @@ Stores the global registry of all profile registrations local to the browser cli
 ]
 
 
-##FILES
+FILES 
 
-```text
 CodeMaster Gamified Logic Arena/
 ├── About.html          # Info page detailing rules, platform mechanics, and references.
 ├── CodeMaster Pro.jpeg # Branding identity asset used for layout images and favicons
