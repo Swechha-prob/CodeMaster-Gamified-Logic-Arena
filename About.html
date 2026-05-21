@@ -3,148 +3,246 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CodeMaster Arena - About</title>
+  <title>CodeMaster - About</title>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style-new.css">
   <link rel="icon" type="image/jpeg" href="CodeMaster Pro.jpeg">
 </head>
-<body>
-  
+<body class="page-about">
   <header class="navbar">
     <div class="inner">
-      <a href="Main.html" class="logo" aria-label="CodeMaster Pro Home" style="text-decoration: none; color: inherit; cursor: pointer;">
-        <span aria-hidden="true">⌨️</span> CodeMaster Gamified <span class="dot">Logic Arena</span>
-      </a>
-      
-      <nav aria-label="Primary Navigation">
-        <ul class="nav-links" style="list-style: none; display: flex; gap: 1rem; align-items: center;">
-          <li><button class="nav-link-btn" onclick="window.location.href='Main.html'">🏠 <span class="label">Home</span></button></li>
-          <li><button class="nav-link-btn" onclick="window.location.href='Leaderboard.html'">🏆 <span class="label">Leaderboard</span></button></li>
-          <li><button class="nav-link-btn active" aria-current="page" onclick="window.location.href='About.html'">ℹ️ <span class="label">About</span></button></li>
-          <li><span class="user-info" id="displayUserName"></span></li>
-          <li><button class="nav-link-btn" aria-label="Logout" onclick="logout()" style="color:var(--danger); background: none; border: none; cursor: pointer;">🚪</button></li>
-        </ul>
+      <div class="logo" onclick="window.location.href='Main-new.html'" role="link" aria-label="CodeMaster Pro Home" style="cursor:pointer;">
+        <span aria-hidden="true">ℹ️</span> About
+      </div>
+      <nav class="nav-links" aria-label="Main Navigation">
+        <button class="nav-link-btn" onclick="window.location.href='Main.html'">
+          <span aria-hidden="true">🏠</span> <span class="label">Home</span>
+        </button>
+        <button class="nav-link-btn" onclick="window.location.href='Learn.html'">
+          <span aria-hidden="true">📚</span> <span class="label">Learn</span>
+        </button>
+        <button class="nav-link-btn" onclick="window.location.href='Profile.html'">
+          <span aria-hidden="true">👤</span> <span class="label">Profile</span>
+        </button>
+        <button class="nav-link-btn" onclick="window.location.href='Leaderboard.html'">
+          <span aria-hidden="true">🏆</span> <span class="label">Leaderboard</span>
+        </button>
+        <button class="nav-link-btn active" onclick="window.location.href='About.html'">
+          <span aria-hidden="true">ℹ️</span> <span class="label">About</span>
+        </button>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+        <button class="nav-link-btn" onclick="logout()" style="color:var(--danger);">
+          <span aria-hidden="true">🚪</span>
+        </button>
       </nav>
     </div>
   </header>
 
-  <main style="max-width:768px; margin:0 auto; padding:4rem 1rem;">
-    <button class="back-btn" onclick="window.location.href='Main.html'" aria-label="Back to main dashboard">
-      ← Return to Base
-    </button>
-    
-    <article>
-      <h1 style="font-size:2.25rem; font-weight:700; margin-bottom:1rem;" class="neon-text animate-slide-up">
-        System Architecture
-      </h1>
-      
-      <p class="animate-slide-up" style="color:var(--fg-muted); margin-bottom:2.5rem; font-size:1.1rem; line-height:1.6;">
-        A high-performance programming logic training arena engineered for Chittkara University students.
-        Built with modern web technologies enforcing ES6 standards and dynamic DOM manipulation.
+  <main style="max-width:1000px; margin:0 auto; padding:3rem 1rem;">
+    <!-- Hero Section -->
+    <section class="animate-slide-up" style="text-align:center; margin-bottom:4rem;">
+      <h1 style="font-size:3rem; margin-bottom:1rem; color:var(--primary);">🎓 CodeMaster Arena</h1>
+      <p style="font-size:1.25rem; color:var(--fg-muted); max-width:600px; margin:0 auto 2rem;">
+        An interactive learning platform designed to master core programming concepts through gamified quizzes and hands-on challenges.
       </p>
-      
-      <section aria-label="Platform Features">
-        <div id="featuresGrid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1.5rem;">
+    </section>
+
+    <!-- Mission Section -->
+    <div class="glass-card" style="padding:2.5rem; margin-bottom:2rem; border-radius:var(--radius);">
+      <h2 style="font-size:2rem; margin-bottom:1.5rem; color:var(--primary);">🎯 Our Mission</h2>
+      <p style="line-height:1.8; color:var(--fg-muted); margin-bottom:1rem;">
+        CodeMaster Arena is built with one core mission: to empower learners at Chitkara University and beyond to master programming fundamentals through interactive, engaging challenges. We believe that the best way to learn programming is through active practice, immediate feedback, and gamification that keeps learners motivated.
+      </p>
+      <p style="line-height:1.8; color:var(--fg-muted);">
+        Our platform combines theoretical knowledge with practical problem-solving to create a comprehensive learning experience that prepares students for real-world development challenges.
+      </p>
+    </div>
+
+    <!-- Features Section -->
+    <div style="margin-bottom:3rem;">
+      <h2 style="font-size:2rem; margin-bottom:2rem; color:var(--primary);">✨ Features</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:1.5rem;">
+        <div class="glass-card" style="padding:1.5rem; border-radius:var(--radius);">
+          <p style="font-size:2rem; margin-bottom:0.5rem;">🎮</p>
+          <h3 style="margin-bottom:0.75rem; color:var(--primary);">Gamified Learning</h3>
+          <p style="color:var(--fg-muted);">Earn points, compete on leaderboards, and unlock achievements as you progress through quizzes.</p>
         </div>
-      </section>
-    </article>
+        <div class="glass-card" style="padding:1.5rem; border-radius:var(--radius);">
+          <p style="font-size:2rem; margin-bottom:0.5rem;">⚡</p>
+          <h3 style="margin-bottom:0.75rem; color:var(--primary);">Multiple Difficulty Levels</h3>
+          <p style="color:var(--fg-muted);">Choose between relaxed and time-pressured modes to match your skill level and learning goals.</p>
+        </div>
+        <div class="glass-card" style="padding:1.5rem; border-radius:var(--radius);">
+          <p style="font-size:2rem; margin-bottom:0.5rem;">📚</p>
+          <h3 style="margin-bottom:0.75rem; color:var(--primary);">Comprehensive Content</h3>
+          <p style="color:var(--fg-muted);">Learn HTML, CSS, JavaScript, Python, and C with structured learning paths and explanations.</p>
+        </div>
+        <div class="glass-card" style="padding:1.5rem; border-radius:var(--radius);">
+          <p style="font-size:2rem; margin-bottom:0.5rem;">📊</p>
+          <h3 style="margin-bottom:0.75rem; color:var(--primary);">Progress Tracking</h3>
+          <p style="color:var(--fg-muted);">Monitor your performance, track best scores, and review your quiz history.</p>
+        </div>
+        <div class="glass-card" style="padding:1.5rem; border-radius:var(--radius);">
+          <p style="font-size:2rem; margin-bottom:0.5rem;">🏆</p>
+          <h3 style="margin-bottom:0.75rem; color:var(--primary);">Global Leaderboards</h3>
+          <p style="color:var(--fg-muted);">Compete with peers worldwide and see where you stand on the rankings.</p>
+        </div>
+        <div class="glass-card" style="padding:1.5rem; border-radius:var(--radius);">
+          <p style="font-size:2rem; margin-bottom:0.5rem;">🌙</p>
+          <h3 style="margin-bottom:0.75rem; color:var(--primary);">Dark/Light Mode</h3>
+          <p style="color:var(--fg-muted);">Switch between beautiful dark and light themes optimized for your preferences.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Technology Stack -->
+    <div class="glass-card" style="padding:2.5rem; margin-bottom:2rem; border-radius:var(--radius);">
+      <h2 style="font-size:2rem; margin-bottom:1.5rem; color:var(--primary);">🛠️ Technology Stack</h2>
+      
+      <div style="margin-bottom:2rem;">
+        <h3 style="color:var(--primary); margin-bottom:1rem;">Frontend</h3>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:1rem;">
+          <div style="padding:1rem; background:rgba(56,189,248,0.1); border-radius:0.5rem; border:1px solid var(--border);">
+            <p style="font-weight:600; margin-bottom:0.25rem;">HTML5</p>
+            <p style="font-size:0.875rem; color:var(--fg-muted);">Semantic markup</p>
+          </div>
+          <div style="padding:1rem; background:rgba(56,189,248,0.1); border-radius:0.5rem; border:1px solid var(--border);">
+            <p style="font-weight:600; margin-bottom:0.25rem;">CSS3</p>
+            <p style="font-size:0.875rem; color:var(--fg-muted);">Glassmorphism, Animations</p>
+          </div>
+          <div style="padding:1rem; background:rgba(56,189,248,0.1); border-radius:0.5rem; border:1px solid var(--border);">
+            <p style="font-weight:600; margin-bottom:0.25rem;">Vanilla JavaScript</p>
+            <p style="font-size:0.875rem; color:var(--fg-muted);">No frameworks</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:2rem;">
+        <h3 style="color:var(--primary); margin-bottom:1rem;">Data & Storage</h3>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:1rem;">
+          <div style="padding:1rem; background:rgba(34,197,94,0.1); border-radius:0.5rem; border:1px solid var(--border);">
+            <p style="font-weight:600; margin-bottom:0.25rem;">localStorage</p>
+            <p style="font-size:0.875rem; color:var(--fg-muted);">Persistent storage</p>
+          </div>
+          <div style="padding:1rem; background:rgba(34,197,94,0.1); border-radius:0.5rem; border:1px solid var(--border);">
+            <p style="font-weight:600; margin-bottom:0.25rem;">JSON</p>
+            <p style="font-size:0.875rem; color:var(--fg-muted);">Data format</p>
+          </div>
+          <div style="padding:1rem; background:rgba(34,197,94,0.1); border-radius:0.5rem; border:1px solid var(--border);">
+            <p style="font-weight:600; margin-bottom:0.25rem;">Web Audio API</p>
+            <p style="font-size:0.875rem; color:var(--fg-muted);">Sound effects</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 style="color:var(--primary); margin-bottom:1rem;">Deployment</h3>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:1rem;">
+          <div style="padding:1rem; background:rgba(168,85,247,0.1); border-radius:0.5rem; border:1px solid var(--border);">
+            <p style="font-weight:600; margin-bottom:0.25rem;">Static Site</p>
+            <p style="font-size:0.875rem; color:var(--fg-muted);">100% client-side</p>
+          </div>
+          <div style="padding:1rem; background:rgba(168,85,247,0.1); border-radius:0.5rem; border:1px solid var(--border);">
+            <p style="font-weight:600; margin-bottom:0.25rem;">Vercel Ready</p>
+            <p style="font-size:0.875rem; color:var(--fg-muted);">No backend needed</p>
+          </div>
+          <div style="padding:1rem; background:rgba(168,85,247,0.1); border-radius:0.5rem; border:1px solid var(--border);">
+            <p style="font-weight:600; margin-bottom:0.25rem;">Responsive</p>
+            <p style="font-size:0.875rem; color:var(--fg-muted);">Mobile optimized</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content Covered -->
+    <div class="glass-card" style="padding:2.5rem; margin-bottom:2rem; border-radius:var(--radius);">
+      <h2 style="font-size:2rem; margin-bottom:1.5rem; color:var(--primary);">📖 Content Covered</h2>
+      
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1.5rem;">
+        <div>
+          <h3 style="color:var(--primary); margin-bottom:0.75rem;">🌐 HTML5</h3>
+          <ul style="color:var(--fg-muted); line-height:2;">
+            <li>✓ Semantic markup</li>
+            <li>✓ Forms & inputs</li>
+            <li>✓ Media elements</li>
+            <li>✓ Accessibility</li>
+            <li>✓ Best practices</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="color:var(--primary); margin-bottom:0.75rem;">🎨 CSS3</h3>
+          <ul style="color:var(--fg-muted); line-height:2;">
+            <li>✓ Selectors & specificity</li>
+            <li>✓ Flexbox & Grid</li>
+            <li>✓ Animations & transitions</li>
+            <li>✓ Responsive design</li>
+            <li>✓ Modern features</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="color:var(--primary); margin-bottom:0.75rem;">🟨 JavaScript</h3>
+          <ul style="color:var(--fg-muted); line-height:2;">
+            <li>✓ Variables & types</li>
+            <li>✓ Functions & closures</li>
+            <li>✓ DOM manipulation</li>
+            <li>✓ Async/Promises</li>
+            <li>✓ ES6+ features</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="color:var(--primary); margin-bottom:0.75rem;">🐍 Python</h3>
+          <ul style="color:var(--fg-muted); line-height:2;">
+            <li>✓ Syntax & data types</li>
+            <li>✓ Control flow</li>
+            <li>✓ Functions & modules</li>
+            <li>✓ Lists & dictionaries</li>
+            <li>✓ OOP concepts</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="color:var(--primary); margin-bottom:0.75rem;">🔵 C Programming</h3>
+          <ul style="color:var(--fg-muted); line-height:2;">
+            <li>✓ Basics & operators</li>
+            <li>✓ Pointers & memory</li>
+            <li>✓ Arrays & strings</li>
+            <li>✓ Structs & unions</li>
+            <li>✓ File I/O</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div style="text-align:center; padding:3rem 2rem; background:rgba(56,189,248,0.1); border-radius:var(--radius); border:1px solid var(--border);">
+      <h2 style="font-size:1.75rem; margin-bottom:1rem; color:var(--primary);">Ready to Master Programming?</h2>
+      <p style="color:var(--fg-muted); margin-bottom:2rem; max-width:600px; margin-left:auto; margin-right:auto;">
+        Start your journey with CodeMaster Arena. Choose a language, pick your difficulty, and compete with learners worldwide.
+      </p>
+      <button onclick="window.location.href='Main.html'" class="btn-primary" style="min-width:200px;">
+        🚀 Start Learning Now
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <footer style="text-align:center; margin-top:3rem; padding-top:2rem; border-top:1px solid var(--border);">
+      <p style="color:var(--fg-muted); font-size:0.875rem;">
+        CodeMaster Arena © 2024 | Designed & developed with ❤️ for Chitkara University<br>
+        <span style="font-size:0.75rem;">Built with HTML5 • CSS3 • Vanilla JavaScript</span>
+      </p>
+    </footer>
   </main>
 
-<script>
-  // 1. SECURE & ROBUST USER INITIALIZATION
-  let user = null;
-  try {
-    // Using Nullish Coalescing (??) to prevent JSON.parse(null) errors
-    user = JSON.parse(sessionStorage.getItem("codemaster_user") ?? "null");
-  } catch (error) {
-    console.error("Auth Error: Session data corrupted.", error);
-  }
-
-  // Guard Clause for Authentication: Redirect if no user session exists
-  if (!user) {
-    window.location.href = "index.html";
-  } else {
-
-    // 2. PERFORMANCE OPTIMIZED DOM UPDATES
-    // Using Optional Chaining (?.) to prevent crashes if name is undefined (check if user is logged in , if it is then display their 1st name)
-    const firstName = user?.name?.split(" ")[0] ?? "User";
-    const nameDisplay = document.getElementById("displayUserName");
-    if (nameDisplay) {
-      nameDisplay.textContent = `@${firstName}`;
+  <script src="auth.js"></script>
+  <script>
+    // Auth guard
+    if (!auth || !auth.isAuthenticated()) {
+      window.location.href = 'index.html';
     }
-  }
 
-  // 3. MODULAR LOGOUT FUNCTION
-  // Cleans up local session and returns to Login
-  function logout() {
-    sessionStorage.removeItem("codemaster_user");
-    window.location.href = "index.html";
-  }
-
-  // 4. DATA MODEL (MODULAR ARRAY)
-  // List of technical features displayed on the page
-  const aboutFeatures = [
-    { icon: "🔐", title: "Secure Auth", desc: "University-grade authentication restricting access to @chitkara.edu.in accounts." },
-    { icon: "⚡", title: "ES6 DOM Manipulation", desc: "Engineered using modern JavaScript modules and local storage caching." },
-    { icon: "🏆", title: "Global Leaderboard", desc: "Real-time ranking tracking algorithm persisting your top attempts." },
-    { icon: "🎨", title: "Advanced CSS3", desc: "Utilizing Flexbox, 3D Transforms, Gradients, and Keyframe Animations." }
-  ];
-
-  // 5. PERFORMANCE OPTIMIZED RENDERING
-  const renderFeatures = () => {
-    const grid = document.getElementById("featuresGrid");
-    if (!grid) return;
-
-    // We build the string first to perform a single DOM injection (Performance Optimized)
-    const featuresHTML = aboutFeatures.map((f, i) => `
-      <section class="glass-card feature-card animate-slide-up" style="animation-delay:${i * 0.1}s;">
-        <div style="font-size:2.5rem; margin-bottom:1rem;" aria-hidden="true">${f.icon}</div>
-        <h2 style="font-weight:700; font-size:1.25rem; margin-bottom:0.5rem;">${f.title}</h2>
-        <p style="font-size:0.95rem; color:var(--fg-muted); line-height:1.5;">${f.desc}</p>
-      </section>
-    `).join("");
-
-    grid.innerHTML = featuresHTML;
-  };
-
-  // Initial Execution to populate the grid
-  renderFeatures();
-  
-  //API
-// ========================================================
-// REFINED SCI-FI AUDIO SYSTEM (Single Hover Sound Only) 
-// ========================================================
-
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-// A single, premium "Tick" sound 
-function playInteractionSound() {
-  if (audioCtx.state === 'suspended') audioCtx.resume();
-  
-  const oscillator = audioCtx.createOscillator();
-  const gainNode = audioCtx.createGain();
-  
-  oscillator.type = 'sine'; // Extremely smooth sound
-  oscillator.frequency.setValueAtTime(800, audioCtx.currentTime); 
-  oscillator.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.04); // Instant pitch drop
-  
-  gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime); // Very quiet (5%)
-  gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04); // Instantly fades out
-  
-  oscillator.connect(gainNode);
-  gainNode.connect(audioCtx.destination);
-  
-  oscillator.start();
-  oscillator.stop(audioCtx.currentTime + 0.04);
-}
-
-// Select all the visual cards on your page
-const interactiveElements = document.querySelectorAll('.lang-card, .diff-card, .btn-login, .option-btn, .nav-link-btn, .feature-card');
-
-// Attach the ONE sound to the starting hover ONLY
-interactiveElements.forEach(element => {
-  element.addEventListener('mouseenter', () => playInteractionSound());
-});
-</script>
+    function logout() {
+      auth.logout();
+      window.location.href = 'index.html';
+    }
+  </script>
 </body>
 </html>

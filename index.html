@@ -3,167 +3,276 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CodeMaster Arena - Login</title>
+  <title>CodeMaster Arena - Authentication</title>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style-new.css">
   <link rel="icon" type="image/jpeg" href="CodeMaster Pro.jpeg">
 </head>
-<body>
+<body class="page-auth">
   <main class="perspective-container">
-    <div class="cube-login" id="cubeLogin">
+    <div class="cube-login" id="authContainer">
       <section class="cube-face">
         <div class="cube-bg" aria-hidden="true"></div>
         
         <header style="text-align:center; margin-bottom:2rem; position:relative; z-index:1;">
           <div style="font-size:2.5rem; margin-bottom:1rem;" class="animate-float" aria-hidden="true">⚡</div>
-          <h1 style="color:var(--primary); letter-spacing:2px; font-size:1.5rem; font-weight:700;" class="neon-text">System Override</h1>
-          <p style="color:var(--fg-muted); font-size:0.8rem; margin-top:0.5rem;">Authentication Protocol</p>
+          <h1 id="authTitle" style="color:var(--primary); letter-spacing:2px; font-size:1.5rem; font-weight:700;" class="neon-text">System Override</h1>
+          <p id="authSubtitle" style="color:var(--fg-muted); font-size:0.8rem; margin-top:0.5rem;">Authentication Protocol</p>
         </header>
 
-        <form id="loginForm" style="position:relative; z-index:1;" novalidate>
-          <div class="form-group">
-            <label for="userName">Operative Identity</label>
-            <input type="text" id="userName" name="userName" placeholder="Enter Name" required autocomplete="name">
-          </div>
+        <form id="authForm" style="position:relative; z-index:1;" novalidate>
+          <!-- LOGIN MODE (shown by default) -->
+          <div id="loginMode" class="auth-mode">
+            <div class="form-group">
+              <label for="loginName">Operative Identity</label>
+              <input type="text" id="loginName" placeholder="Enter Name" autocomplete="name">
+            </div>
 
-          <div class="form-group">
-            <label for="userEmail">Secure University Clearance</label>
-            <input type="email" id="userEmail" name="userEmail" placeholder="id@chitkara.edu.in" 
-                   required autocomplete="email" aria-describedby="emailError">
-            
-            <p class="error-msg" id="emailError" role="alert" style="display:none;">
-              ACCESS DENIED. Invalid clearance domain.
+            <div class="form-group">
+              <label for="loginEmail">Secure University Clearance</label>
+              <input type="email" id="loginEmail" placeholder="id@chitkara.edu.in" autocomplete="email" aria-describedby="loginEmailError">
+              <p class="error-msg" id="loginEmailError" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label for="loginPassword">Authentication Code</label>
+              <input type="password" id="loginPassword" placeholder="Enter Password" autocomplete="current-password" aria-describedby="loginPasswordError">
+              <p class="error-msg" id="loginPasswordError" role="alert"></p>
+            </div>
+
+            <button type="submit" class="btn-login">Initialize Link</button>
+
+            <p style="text-align:center; margin-top:1.5rem; font-size:0.875rem; color:var(--fg-muted);">
+              No account yet? 
+              <button type="button" id="switchToSignup" class="btn-toggle" style="display:inline-block; margin-left:0.5rem;">Create Account</button>
             </p>
           </div>
 
-          <button type="submit" class="btn-login">Initialize Link</button>
+          <!-- SIGNUP MODE (hidden by default) -->
+          <div id="signupMode" class="auth-mode hidden">
+            <div class="form-group">
+              <label for="signupName">Full Name</label>
+              <input type="text" id="signupName" placeholder="Enter your name" autocomplete="name" aria-describedby="signupNameError">
+              <p class="error-msg" id="signupNameError" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label for="signupEmail">University Email</label>
+              <input type="email" id="signupEmail" placeholder="you@chitkara.edu.in" autocomplete="email" aria-describedby="signupEmailError">
+              <p class="error-msg" id="signupEmailError" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label for="signupPassword">Create Password</label>
+              <input type="password" id="signupPassword" placeholder="Min. 6 characters" autocomplete="new-password" aria-describedby="signupPasswordError">
+              <p class="error-msg" id="signupPasswordError" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label>Select Gender</label>
+              <div class="gender-selector" id="genderSelector" role="group" aria-label="Gender selection">
+                <button type="button" class="gender-chip" data-gender="Male" aria-pressed="false">👨 Male</button>
+                <button type="button" class="gender-chip" data-gender="Female" aria-pressed="false">👩 Female</button>
+                <button type="button" class="gender-chip" data-gender="Other" aria-pressed="false">🧑 Other</button>
+              </div>
+              <p class="error-msg" id="genderError" role="alert"></p>
+            </div>
+
+            <button type="submit" class="btn-login">Create Account</button>
+
+            <p style="text-align:center; margin-top:1.5rem; font-size:0.875rem; color:var(--fg-muted);">
+              Already have an account? 
+              <button type="button" id="switchToLogin" class="btn-toggle" style="display:inline-block; margin-left:0.5rem;">Sign In</button>
+            </p>
+          </div>
         </form>
       </section>
     </div>
   </main>
 
-<script>
-  // 1. CONFIGURATION & CONSTANTS
-  const CONFIG = {
-    REDIRECT_PAGE: "Main.html",
-    ALLOWED_DOMAIN: "@chitkara.edu.in",
-    STORAGE_KEY: "codemaster_user"
-  };
+  <script src="auth.js"></script>
+  <script>
+    // Check if already logged in
+    if (auth.isAuthenticated()) {
+      window.location.href = 'Main.html';
+    }
 
-  // 2. MODULAR AUTH GUARD
-  // Prevents logged-in users from seeing the login page again
-  const checkExistingSession = () => {
-    try {
-      if (sessionStorage.getItem(CONFIG.STORAGE_KEY)) {
-        window.location.href = CONFIG.REDIRECT_PAGE;
+    // DOM Elements
+    const authForm = document.getElementById('authForm');
+    const loginMode = document.getElementById('loginMode');
+    const signupMode = document.getElementById('signupMode');
+    const switchToSignup = document.getElementById('switchToSignup');
+    const switchToLogin = document.getElementById('switchToLogin');
+    const authTitle = document.getElementById('authTitle');
+    const authSubtitle = document.getElementById('authSubtitle');
+    const genderSelector = document.getElementById('genderSelector');
+    let selectedGender = null;
+
+    // Default form to login mode
+    authForm.dataset.mode = 'login';
+
+    // Mode switching
+    switchToSignup.addEventListener('click', (e) => {
+      e.preventDefault();
+      loginMode.classList.add('hidden');
+      signupMode.classList.remove('hidden');
+      authTitle.textContent = 'Neural Registry';
+      authSubtitle.textContent = 'New Identity Creation';
+      authForm.dataset.mode = 'signup';
+      clearErrors();
+      authForm.reset();
+      selectedGender = null;
+      updateGenderSelection();
+    });
+
+    switchToLogin.addEventListener('click', (e) => {
+      e.preventDefault();
+      loginMode.classList.remove('hidden');
+      signupMode.classList.add('hidden');
+      authTitle.textContent = 'System Override';
+      authSubtitle.textContent = 'Authentication Protocol';
+      authForm.dataset.mode = 'login';
+      clearErrors();
+      authForm.reset();
+      selectedGender = null;
+    });
+
+    // Gender chip selection
+    const genderChips = genderSelector.querySelectorAll('.gender-chip');
+    genderChips.forEach(chip => {
+      chip.addEventListener('click', (e) => {
+        e.preventDefault();
+        genderChips.forEach(c => {
+          c.classList.remove('selected');
+          c.setAttribute('aria-pressed', 'false');
+        });
+        chip.classList.add('selected');
+        chip.setAttribute('aria-pressed', 'true');
+        selectedGender = chip.dataset.gender;
+      });
+    });
+
+    function updateGenderSelection() {
+      genderChips.forEach(chip => {
+        chip.classList.remove('selected');
+        chip.setAttribute('aria-pressed', 'false');
+      });
+    }
+
+    function clearErrors() {
+      document.querySelectorAll('.error-msg').forEach(el => {
+        el.textContent = '';
+        el.style.display = 'none';
+      });
+    }
+
+    function showError(elementId, message) {
+      const el = document.getElementById(elementId);
+      if (el) {
+        el.textContent = message;
+        el.style.display = 'block';
+        el.setAttribute('role', 'alert');
       }
-    } catch (e) {
-      console.warn("Storage access denied:", e);
-    }
-  };
-
-  // 3. PERFORMANCE OPTIMIZED ANIMATION (Shake Logic)
-  // Provides visual feedback on failed validation
-  const triggerShake = (element) => {
-    // Toggles a CSS class to offload animation work to the browser compositor
-    element.classList.add('shake-animation');
-    element.addEventListener('animationend', () => {
-      element.classList.remove('shake-animation');
-    }, { once: true });
-    
-    // JS Fallback for immediate visual feedback
-    element.style.transform = "translateX(-10px)";
-    setTimeout(() => element.style.transform = "translateX(0)", 300);
-  };
-
-  // 4. MAIN FORM CONTROLLER
-  // Handles form submission, email domain validation, and session creation if validation is successful
-  const handleLogin = (e) => {
-    e.preventDefault();
-
-    // Data Extraction
-    const form = e.target;
-    const name = document.getElementById("userName").value.trim();
-    const email = document.getElementById("userEmail").value.trim().toLowerCase();
-    
-    const emailInput = document.getElementById("userEmail");
-    const errDiv = document.getElementById("emailError");
-    const box = document.getElementById("cubeLogin");
-
-    // VALIDATION LOGIC: Check for specific university domain
-    if (!email.endsWith(CONFIG.ALLOWED_DOMAIN)) {
-      errDiv.style.display = "block";
-      emailInput.setAttribute("aria-invalid", "true");
-      triggerShake(box);
-      emailInput.focus();
-      return;
     }
 
-    // SUCCESSFUL VALIDATION & SESSION STORAGE
-    try {
-      errDiv.style.display = "none";
-      emailInput.setAttribute("aria-invalid", "false");
-
-      // ES6 Object Shorthand to create user profile
-      const userData = { name, email };
-      sessionStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(userData));
-      
-      // Navigate to the main application
-      window.location.href = CONFIG.REDIRECT_PAGE;
-    } catch (error) {
-      // Handles rare cases like disabled storage or private mode restrictions
-      alert("System Error: Could not save session. Please check browser settings.");
-      console.error("Session storage failed:", error);
+    function shakeContainer() {
+      const container = document.getElementById('authContainer');
+      container.classList.add('shake-animation');
+      container.addEventListener('animationend', () => {
+        container.classList.remove('shake-animation');
+      }, { once: true });
     }
-  };
 
-  // 5. INITIALIZATION
-  document.addEventListener("DOMContentLoaded", () => {
-    // Run safety check on load (check for an existing session)
-    checkExistingSession();
-    
-    // Attach event listener to the form
-    const loginForm = document.getElementById("loginForm");
-    if (loginForm) {
-      loginForm.addEventListener("submit", handleLogin);
+    // Form submission
+    authForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearErrors();
+
+      const mode = authForm.dataset.mode;
+      if (mode === 'signup') {
+        await handleSignup();
+      } else {
+        await handleLogin();
+      }
+    });
+
+    async function handleLogin() {
+      const name = document.getElementById('loginName').value.trim();
+      const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+      const password = document.getElementById('loginPassword').value;
+
+      if (!name || !email || !password) {
+        showError('loginEmailError', 'All fields are required');
+        return;
+      }
+
+      if (!email.endsWith('@chitkara.edu.in')) {
+        showError('loginEmailError', 'Only @chitkara.edu.in emails are allowed');
+        shakeContainer();
+        return;
+      }
+
+      try {
+        // Direct localStorage lookup — fixes login bug
+        const users = JSON.parse(localStorage.getItem('codemaster_users') || '[]');
+        const match = users.find(u => u.email === email && u.name.toLowerCase() === name.toLowerCase());
+
+        if (!match) {
+          showError('loginEmailError', 'Name or email not found. Please sign up first.');
+          shakeContainer();
+          return;
+        }
+
+        // Hash the password the same way auth.js does
+        await auth.login(name, email, password);
+        window.location.href = './Main.html';
+      } catch (error) {
+        if (error.message && error.message.toLowerCase().includes('password')) {
+          showError('loginPasswordError', error.message);
+        } else {
+          showError('loginEmailError', error.message || 'Login failed. Please check your credentials.');
+        }
+        shakeContainer();
+      }
     }
-  });
 
-  //API
-// ========================================================
-// REFINED SCI-FI AUDIO SYSTEM (Single Hover Sound Only) 
-// ========================================================
+    async function handleSignup() {
+      const name = document.getElementById('signupName').value.trim();
+      const email = document.getElementById('signupEmail').value.trim().toLowerCase();
+      const password = document.getElementById('signupPassword').value;
 
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (!name) { showError('signupNameError', 'Name is required'); return; }
+      if (!email) { showError('signupEmailError', 'Email is required'); return; }
+      if (!password) { showError('signupPasswordError', 'Password is required'); return; }
+      if (!selectedGender) { showError('genderError', 'Please select a gender'); return; }
 
-// A single, premium "Tick" sound 
-function playInteractionSound() {
-  if (audioCtx.state === 'suspended') audioCtx.resume();
-  
-  const oscillator = audioCtx.createOscillator();
-  const gainNode = audioCtx.createGain();
-  
-  oscillator.type = 'sine'; // Extremely smooth sound
-  oscillator.frequency.setValueAtTime(800, audioCtx.currentTime); 
-  oscillator.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.04); // Instant pitch drop
-  
-  gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime); // Very quiet (5%)
-  gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04); // Instantly fades out
-  
-  oscillator.connect(gainNode);
-  gainNode.connect(audioCtx.destination);
-  
-  oscillator.start();
-  oscillator.stop(audioCtx.currentTime + 0.04);
-}
+      try {
+        await auth.signup(name, email, password, selectedGender);
+        await auth.login(name, email, password);
+        window.location.href = './Main.html';
+      } catch (error) {
+        const msg = error.message || 'Signup failed';
+        if (msg.includes('@chitkara.edu.in')) {
+          showError('signupEmailError', msg);
+        } else if (msg.toLowerCase().includes('password')) {
+          showError('signupPasswordError', msg);
+        } else if (msg.toLowerCase().includes('name')) {
+          showError('signupNameError', msg);
+        } else if (msg.toLowerCase().includes('email') || msg.toLowerCase().includes('registered')) {
+          showError('signupEmailError', msg);
+        } else {
+          showError('signupEmailError', msg);
+        }
+        shakeContainer();
+      }
+    }
 
-// Select all the visual cards on your page
-const interactiveElements = document.querySelectorAll('.lang-card, .diff-card, .btn-login, .option-btn, .nav-link-btn, .feature-card');
-
-// Attach the ONE sound to the starting hover ONLY
-interactiveElements.forEach(element => {
-  element.addEventListener('mouseenter', () => playInteractionSound());
-});
-</script>
+    // Animate gender chips on signup
+    switchToSignup.addEventListener('click', () => {
+      document.querySelectorAll('.gender-chip').forEach((chip, i) => {
+        chip.style.animation = `slideUp 0.6s ease 0.${i}s both`;
+      });
+    });
+  </script>
 </body>
 </html>

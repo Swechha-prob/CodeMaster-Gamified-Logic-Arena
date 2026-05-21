@@ -3,161 +3,362 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CodeMaster Arena - Leaderboard</title>
+  <title>CodeMaster - Leaderboard</title>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style-new.css">
   <link rel="icon" type="image/jpeg" href="CodeMaster Pro.jpeg">
-</head>
-<body>
+  <style>
+    .podium-item {
+  position: relative;
+  overflow: hidden;
+}
 
-  <header style="max-width:768px; margin:0 auto; padding: 1rem;">
-    <nav style="display:flex; justify-content:space-between; align-items:center;">
-      <button class="back-btn" onclick="window.location.href='Main.html'">← Return to Base</button>
-      <div style="font-weight:600;">CodeMaster Gamified <span style="color:var(--primary);">Logic Arena</span></div>
-    </nav>
+.podium-item::before {
+
+  content: "";
+
+  position: absolute;
+  inset: -2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #00b7ff,
+      #7c3aed,
+      #ff0080,
+      #00ffaa
+    );
+
+  z-index: -1;
+
+  filter: blur(25px);
+
+  opacity: 0;
+
+  transition: 0.5s ease;
+}
+
+.podium-item:hover::before {
+  opacity: 1;
+}
+
+    .leaderboard-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .leaderboard-table th {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 2px solid var(--border);
+      color: var(--primary);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+    }
+
+    .leaderboard-table td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .rank {
+      font-weight: 700;
+      color: var(--primary);
+      min-width: 3rem;
+    }
+
+    .rank.gold {
+      color: #fbbf24;
+      font-size: 1.25rem;
+    }
+
+    .rank.silver {
+      color: #d1d5db;
+      font-size: 1.25rem;
+    }
+
+    .rank.bronze {
+      color: #f97316;
+      font-size: 1.25rem;
+    }
+
+    .leaderboard-table tr:hover {
+      background: rgba(56, 189, 248, 0.05);
+    }
+
+    .tab-buttons {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 0.75rem 1.5rem;
+      border: 2px solid var(--border);
+      background: rgba(56, 189, 248, 0.05);
+      color: var(--fg-muted);
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+    }
+
+    .tab-btn:hover,
+    .tab-btn.active {
+      border-color: var(--primary);
+      background: var(--primary-alpha);
+      color: var(--primary);
+    }
+
+    .podium {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .podium-item {
+      text-align: center;
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      background: rgba(56, 189, 248, 0.05);
+      border: 1px solid var(--border);
+    }
+
+    .podium-item.first {
+      order: 2;
+      transform: scale(1.1);
+      background: rgba(251, 191, 36, 0.1);
+      border-color: #fbbf24;
+    }
+
+    .podium-item.second {
+      order: 1;
+    }
+
+    .podium-item.third {
+      order: 3;
+    }
+
+    .medal {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body class="page-leaderboard">
+  <header class="navbar">
+    <div class="inner">
+      <div class="logo" onclick="window.location.href='Main.html'" role="link" aria-label="CodeMaster Pro Home" style="cursor:pointer;">
+        <span aria-hidden="true">🏆</span> Leaderboard
+      </div>
+      <nav class="nav-links" aria-label="Main Navigation">
+        <button class="nav-link-btn" onclick="window.location.href='Main.html'">
+          <span aria-hidden="true">🏠</span> <span class="label">Home</span>
+        </button>
+        <button class="nav-link-btn" onclick="window.location.href='Learn.html'">
+          <span aria-hidden="true">📚</span> <span class="label">Learn</span>
+        </button>
+        <button class="nav-link-btn" onclick="window.location.href='Profile.html'">
+          <span aria-hidden="true">👤</span> <span class="label">Profile</span>
+        </button>
+        <button class="nav-link-btn active" onclick="window.location.href='Leaderboard.html'">
+          <span aria-hidden="true">🏆</span> <span class="label">Leaderboard</span>
+        </button>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+        <button class="nav-link-btn" onclick="logout()" style="color:var(--danger);">
+          <span aria-hidden="true">🚪</span>
+        </button>
+      </nav>
+    </div>
   </header>
 
-  <main style="max-width:768px; margin:0 auto; padding:2rem 1rem;">
-    <div style="text-align:center; margin-bottom:2rem;">
-      <h1 style="font-size:2.5rem;">🏆 Global Rankings</h1>
-      
-      <!-- ADDED FILTER DROPDOWN -->
-      <div style="display:flex; gap:1rem; justify-content:center; align-items:center; margin-top:1.5rem; flex-wrap:wrap;">
-        <select id="langFilter" onchange="filterLeaderboard()" 
-                style="background:var(--glass-bg); border:1px solid var(--glass-border); color:var(--fg); padding:0.75rem 1rem; border-radius:8px; cursor:pointer; font-size:1rem;">
-          <option value="all">🌐 All Languages</option>
-          <option value="HTML5">🌐 HTML5</option>
-          <option value="CSS3">🎨 CSS3</option>
-          <option value="JavaScript">🟨 JavaScript</option>
-          <option value="Python">🐍 Python</option>
-          <option value="C Programming">🔵 C Programming</option>
-        </select>
-        
-      </div>
+  <main style="max-width:1000px; margin:0 auto; padding:3rem 1rem;">
+    <header style="text-align:center; margin-bottom:3rem;">
+      <h1 style="font-size:2.5rem; margin-bottom:0.5rem; color:var(--primary);">🏆 Global Rankings</h1>
+      <p style="color:var(--fg-muted); font-size:1.125rem;">Compete with programmers worldwide</p>
+    </header>
+
+    <div class="tab-buttons" id="tabButtons">
+      <!-- Filled by JavaScript -->
     </div>
-    
-    <div id="leaderboard-container" class="animate-slide-up">
-      <p style="text-align:center; color:var(--fg-muted);">Loading rankings...</p>
+
+    <!-- Podium (Top 3) -->
+    <div class="podium" id="podium" style="display:none;">
+      <!-- Filled by JavaScript -->
+    </div>
+
+    <!-- Full Leaderboard -->
+    <div class="glass-card" style="padding:1.5rem; border-radius:var(--radius); overflow-x:auto;">
+      <table class="leaderboard-table" id="leaderboardTable">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Score</th>
+            <th>Accuracy</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboardBody">
+          <!-- Filled by JavaScript -->
+        </tbody>
+      </table>
     </div>
   </main>
 
-<script>
-const BACKEND_URL = 'http://127.0.0.1:5000';
-let allScores = []; // Global me sab scores save karenge filter ke liye
-
-async function loadLeaderboard() {
-    const container = document.getElementById('leaderboard-container');
-    try {
-        console.log("Asking Leaderboard from Python...");
-        const response = await fetch(BACKEND_URL + '/leaderboard');
-        const scores = await response.json();
-        
-        console.log("Backend se mila:", scores);
-        allScores = scores; // Global variable me save kar liya
-        
-        displayLeaderboard(scores); // Display function alag bana diya
-
-    } catch (error) {
-        console.log("Leaderboard did not load:", error);
-        container.innerHTML = `
-          <div class="glass-card" style="padding:3rem; text-align:center; border:1px solid var(--danger);">
-            <div style="font-size:3rem; margin-bottom:1rem;">⚠️</div>
-            <h3 style="color:var(--danger); margin-bottom:0.5rem;">Could not connect with BACKEND</h3>
-            <p style="color:var(--fg-muted);">Start 'python backend.py' in the Terminal!</p>
-            <button onclick="loadLeaderboard()" style="margin-top:1rem; background:var(--primary); color:white; padding:0.5rem 1.5rem; border-radius:8px; border:none; cursor:pointer;">
-              Retry
-            </button>
-          </div>
-        `;
+  <script src="auth.js"></script>
+  <script>
+    // Auth guard
+    if (!auth || !auth.isAuthenticated()) {
+      window.location.href = 'index.html';
     }
-}
 
-// NAYA FUNCTION: Filter logic
-function filterLeaderboard() {
-    const selectedLang = document.getElementById('langFilter').value;
-    console.log("Filter selected:", selectedLang);
-    
-    if(selectedLang === 'all') {
-        displayLeaderboard(allScores); // Sab dikhao
-    } else {
-        const filtered = allScores.filter(entry => entry.lang === selectedLang);
-        displayLeaderboard(filtered); // Sirf selected language
+    const languages = [
+      { id: 'html', name: 'HTML5', emoji: '🌐' },
+      { id: 'css', name: 'CSS3', emoji: '🎨' },
+      { id: 'js', name: 'JavaScript', emoji: '🟨' },
+      { id: 'py', name: 'Python', emoji: '🐍' },
+      { id: 'c', name: 'C', emoji: '🔵' }
+    ];
+
+    let currentLang = 'html';
+
+    function logout() {
+      auth.logout();
+      window.location.href = 'index.html';
     }
-}
 
-// NAYA FUNCTION: Display logic alag kar diya
-function displayLeaderboard(scores) {
-    const container = document.getElementById('leaderboard-container');
-    
-    if (scores.length === 0) {
-        container.innerHTML = `
-          <div class="glass-card" style="padding:3rem; text-align:center;">
-            <div style="font-size:3rem; margin-bottom:1rem;">🎯</div>
-            <p style="color:var(--fg-muted);">No data entries found for this filter.</p>
-            <p style="color:var(--fg-muted); font-size:0.9rem;">Be the first to initiate a challenge.</p>
-          </div>
-        `;
+    function getLeaderboard(langId) {
+      const key = `codemaster_leaderboard_${langId}`;
+      const data = JSON.parse(localStorage.getItem(key) || '[]');
+      // Group by user and take best score
+      const grouped = {};
+      data.forEach(entry => {
+        const key = `${entry.name}-${entry.email}`;
+        if (!grouped[key] || entry.scorePercentage > grouped[key].scorePercentage) {
+          grouped[key] = entry;
+        }
+      });
+      return Object.values(grouped)
+        .sort((a, b) => b.scorePercentage - a.scorePercentage)
+        .slice(0, 100);
+    }
+
+    function formatDate(dateString) {
+      return new Date(dateString).toLocaleDateString('en-US', { 
+        month: 'short', 
+        day: 'numeric'
+      });
+    }
+
+    function renderLeaderboard(langId) {
+      currentLang = langId;
+      const leaderboard = getLeaderboard(langId);
+      const podiumDiv = document.getElementById('podium');
+      const tbody = document.getElementById('leaderboardBody');
+
+      // Update tab buttons
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === langId);
+      });
+
+      if (leaderboard.length === 0) {
+        podiumDiv.style.display = 'none';
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:2rem;">No scores yet for this language!</td></tr>';
         return;
+      }
+
+      // Render podium
+      if (leaderboard.length >= 1) {
+        const medals = ['🥇', '🥈', '🥉'];
+        const podiumItems = [];
+
+        // Second place
+        if (leaderboard[1]) {
+          podiumItems.push(`
+            <div class="podium-item second">
+              <div class="medal">${medals[1]}</div>
+              <p style="font-weight:600; margin-bottom:0.25rem;">${escapeHtml(leaderboard[1].name)}</p>
+              <p style="font-size:1.5rem; color:var(--primary); font-weight:700;">${leaderboard[1].scorePercentage}%</p>
+            </div>
+          `);
+        }
+
+        // First place
+        podiumItems.push(`
+          <div class="podium-item first">
+            <div class="medal">${medals[0]}</div>
+            <p style="font-weight:600; margin-bottom:0.25rem;">${escapeHtml(leaderboard[0].name)}</p>
+            <p style="font-size:1.5rem; color:#fbbf24; font-weight:700;">${leaderboard[0].scorePercentage}%</p>
+          </div>
+        `);
+
+        // Third place
+        if (leaderboard[2]) {
+          podiumItems.push(`
+            <div class="podium-item third">
+              <div class="medal">${medals[2]}</div>
+              <p style="font-weight:600; margin-bottom:0.25rem;">${escapeHtml(leaderboard[2].name)}</p>
+              <p style="font-size:1.5rem; color:var(--primary); font-weight:700;">${leaderboard[2].scorePercentage}%</p>
+            </div>
+          `);
+        }
+
+        podiumDiv.innerHTML = podiumItems.join('');
+        podiumDiv.style.display = 'grid';
+      }
+
+      // Render table
+      tbody.innerHTML = leaderboard.map((entry, idx) => {
+        let rankClass = '';
+        let rankDisplay = idx + 1;
+        if (idx === 0) {
+          rankClass = 'gold';
+          rankDisplay = '🥇';
+        } else if (idx === 1) {
+          rankClass = 'silver';
+          rankDisplay = '🥈';
+        } else if (idx === 2) {
+          rankClass = 'bronze';
+          rankDisplay = '🥉';
+        }
+
+        const accuracy = entry.scorePercentage;
+        const accuracyColor = accuracy >= 80 ? 'var(--success)' : accuracy >= 60 ? 'var(--primary)' : 'var(--warning)';
+
+        return `
+          <tr>
+            <td class="rank ${rankClass}">${rankDisplay}</td>
+            <td>${escapeHtml(entry.name)}</td>
+            <td style="font-family:var(--font-mono); font-size:0.875rem;">${escapeHtml(entry.email)}</td>
+            <td style="font-weight:600;">${entry.score}/${entry.total}</td>
+            <td style="font-weight:700; color:${accuracyColor};">${accuracy}%</td>
+            <td style="color:var(--fg-muted); font-size:0.875rem;">${formatDate(entry.date)}</td>
+          </tr>
+        `;
+      }).join('');
     }
 
-    // Score % ke hisaab se sort karo - high to low
-    scores.sort((a, b) => (b.score/b.total) - (a.score/a.total));
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
 
-    let html = `
-      <div class="glass-card" style="padding:1.5rem;">
-        <table style="width:100%; border-collapse:collapse;">
-          <thead>
-            <tr style="border-bottom:2px solid var(--primary); color:var(--primary);">
-              <th style="padding:1rem; text-align:left;">Rank</th>
-              <th style="padding:1rem; text-align:left;">Player</th>
-              <th style="padding:1rem; text-align:left;">Language</th>
-              <th style="padding:1rem; text-align:left;">Score</th>
-              <th style="padding:1rem; text-align:left;">Accuracy</th>
-            </tr>
-          </thead>
-          <tbody>
-    `;
-    
-    scores.forEach((entry, index) => {
-        const percent = Math.round((entry.score / entry.total) * 100);
-        const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}`;
-        const rowStyle = index < 3 ? 'background:rgba(99, 102, 241, 0.1);' : '';
-        
-        html += `
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.05); ${rowStyle}">
-                <td style="padding:1rem; font-weight:700; font-size:1.1rem;">${medal}</td>
-                <td style="padding:1rem; font-weight:600;">${entry.name}</td>
-                <td style="padding:1rem;">
-                  <span style="background:rgba(99, 102, 241, 0.2); padding:0.25rem 0.75rem; border-radius:12px; font-size:0.85rem;">
-                    ${entry.lang}
-                  </span>
-                </td>
-                <td style="padding:1rem; font-family:'JetBrains Mono';">
-                  <strong>${entry.score}/${entry.total}</strong>
-                </td>
-                <td style="padding:1rem;">
-                  <div style="display:flex; align-items:center; gap:0.5rem;">
-                    <div style="width:60px; height:6px; background:rgba(255,255,255,0.1); border-radius:3px; overflow:hidden;">
-                      <div style="width:${percent}%; height:100%; background:${percent >= 80 ? '#22c55e' : percent >= 50 ? '#f59e0b' : '#ef4444'};"></div>
-                    </div>
-                    <span style="font-family:'JetBrains Mono'; font-size:0.9rem;">${percent}%</span>
-                  </div>
-                </td>
-            </tr>
-        `;
-    });
-    
-    html += '</tbody></table></div>';
-    container.innerHTML = html;
-}
+    // Initialize
+    const tabButtons = document.getElementById('tabButtons');
+    tabButtons.innerHTML = languages.map(lang => `
+      <button class="tab-btn ${lang.id === 'html' ? 'active' : ''}" data-lang="${lang.id}" onclick="renderLeaderboard('${lang.id}')">
+        ${lang.emoji} ${lang.name}
+      </button>
+    `).join('');
 
-
-// Page load hote hi leaderboard le aao
-loadLeaderboard();
-
-// Auto-refresh har 10 second me
-setInterval(loadLeaderboard, 10000);
-</script>
-
+    renderLeaderboard('html');
+  </script>
 </body>
 </html>

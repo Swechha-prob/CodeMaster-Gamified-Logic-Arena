@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeMaster - Learn</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style-new.css">
+  <link rel="icon" type="image/jpeg" href="CodeMaster Pro.jpeg">
+</head>
+<body class="page-learn">
+  <header class="navbar">
+    <div class="inner">
+      <div class="logo" onclick="window.location.href='Main.html'" role="link" aria-label="CodeMaster Pro Home" style="cursor:pointer;">
+        <span aria-hidden="true">📚</span> Learning Hub
+      </div>
+      <nav class="nav-links" aria-label="Main Navigation">
+        <button class="nav-link-btn" onclick="window.location.href='Main.html'">
+          <span aria-hidden="true">🏠</span> <span class="label">Home</span>
+        </button>
+        <button class="nav-link-btn active" onclick="window.location.href='Learn.html'">
+          <span aria-hidden="true">📚</span> <span class="label">Learn</span>
+        </button>
+        <button class="nav-link-btn" onclick="window.location.href='Profile.html'">
+          <span aria-hidden="true">👤</span> <span class="label">Profile</span>
+        </button>
+        <button class="nav-link-btn" onclick="window.location.href='Leaderboard.html'">
+          <span aria-hidden="true">🏆</span> <span class="label">Leaderboard</span>
+        </button>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+        <button class="nav-link-btn" onclick="logout()" style="color:var(--danger);">
+          <span aria-hidden="true">🚪</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main style="max-width:1000px; margin:0 auto; padding:3rem 1rem;">
+    <header
+  class="glass-card"
+  style="
+    padding:3rem;
+    text-align:center;
+    margin-bottom:3rem;
+    overflow:hidden;
+    position:relative;
+  ">
+
+  <div
+    style="
+      position:absolute;
+      inset:0;
+
+      background:
+      linear-gradient(
+        135deg,
+        #00b7ff,
+        #7c3aed,
+        #ff0080,
+        #00ffaa
+      );
+
+      opacity:0.08;
+    "
+  ></div>
+
+  <h1
+    class="ai-title"
+    style="
+      font-size:3.5rem;
+      position:relative;
+      z-index:1;
+    "
+  >
+    AI Knowledge Matrix
+  </h1>
+
+  <p
+    style="
+      color:var(--fg-muted);
+      font-size:1.1rem;
+
+      position:relative;
+      z-index:1;
+
+      max-width:700px;
+      margin:auto;
+      margin-top:1rem;
+    ">
+    Explore immersive programming concepts through animated futuristic learning modules.
+  </p>
+
+</header>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; margin-bottom:3rem;">
+      <button class="glass-card" onclick="showTopic('html')" style="padding:1.5rem; text-align:center; cursor:pointer; border:2px solid transparent; transition:all 0.3s;">
+        <div style="font-size:2.5rem; margin-bottom:0.5rem;">🌐</div>
+        <h3 style="margin-bottom:0.25rem;">HTML5</h3>
+        <p style="color:var(--fg-muted); font-size:0.875rem;">Markup Language</p>
+      </button>
+      <button class="glass-card" onclick="showTopic('css')" style="padding:1.5rem; text-align:center; cursor:pointer; border:2px solid transparent; transition:all 0.3s;">
+        <div style="font-size:2.5rem; margin-bottom:0.5rem;">🎨</div>
+        <h3 style="margin-bottom:0.25rem;">CSS3</h3>
+        <p style="color:var(--fg-muted); font-size:0.875rem;">Styling</p>
+      </button>
+      <button class="glass-card" onclick="showTopic('js')" style="padding:1.5rem; text-align:center; cursor:pointer; border:2px solid transparent; transition:all 0.3s;">
+        <div style="font-size:2.5rem; margin-bottom:0.5rem;">🟨</div>
+        <h3 style="margin-bottom:0.25rem;">JavaScript</h3>
+        <p style="color:var(--fg-muted); font-size:0.875rem;">Interactivity</p>
+      </button>
+      <button class="glass-card" onclick="showTopic('py')" style="padding:1.5rem; text-align:center; cursor:pointer; border:2px solid transparent; transition:all 0.3s;">
+        <div style="font-size:2.5rem; margin-bottom:0.5rem;">🐍</div>
+        <h3 style="margin-bottom:0.25rem;">Python</h3>
+        <p style="color:var(--fg-muted); font-size:0.875rem;">Scripting</p>
+      </button>
+      <button class="glass-card" onclick="showTopic('c')" style="padding:1.5rem; text-align:center; cursor:pointer; border:2px solid transparent; transition:all 0.3s;">
+        <div style="font-size:2.5rem; margin-bottom:0.5rem;">🔵</div>
+        <h3 style="margin-bottom:0.25rem;">C</h3>
+        <p style="color:var(--fg-muted); font-size:0.875rem;">Systems</p>
+      </button>
+    </div>
+
+    <div id="content" class="animate-fade"></div>
+  </main>
+
+  <script src="auth.js"></script>
+  <script>
+    // Auth guard
+    if (!auth || !auth.isAuthenticated()) {
+      window.location.href = 'index.html';
+    }
+
+    function logout() {
+      auth.logout();
+      window.location.href = 'index.html';
+    }
+
+    const topics = {
+      html: {
+        title: 'HTML5 Fundamentals',
+        sections: [
+          {
+            name: 'Getting Started',
+            content: 'HTML (HyperText Markup Language) is the standard markup language for creating web pages. It provides the structure and content of web applications.',
+            code: '<!DOCTYPE html>\n<html lang="en">\n<head>\n  <title>My Page</title>\n</head>\n<body>\n  <h1>Hello, World!</h1>\n</body>\n</html>',
+            lang: 'html'
+          },
+          {
+            name: 'Semantic Tags',
+            content: 'Semantic HTML tags describe the meaning of content to both the browser and developer, improving accessibility and SEO.',
+            code: '<header>\n  <nav>Navigation</nav>\n</header>\n<main>\n  <article>\n    <h1>Article Title</h1>\n    <p>Content here...</p>\n  </article>\n</main>\n<footer>Footer</footer>',
+            lang: 'html'
+          },
+          {
+            name: 'Common Interview Questions',
+            qa: [
+              { q: 'What is the difference between block and inline elements?', a: 'Block elements take full width and start on new line (div, p, h1), while inline elements only take needed width and flow within text (span, a, img).' },
+              { q: 'Explain the HTML5 DOCTYPE.', a: 'The DOCTYPE <!DOCTYPE html> declaration tells the browser that the document is HTML5. It must be the first line in an HTML document.' },
+              { q: 'What are data attributes in HTML?', a: 'Data attributes (data-*) allow you to store custom data on HTML elements that can be accessed via JavaScript or CSS.' }
+            ]
+          }
+        ]
+      },
+      css: {
+        title: 'CSS3 Styling',
+        sections: [
+          {
+            name: 'CSS Selectors',
+            content: 'CSS selectors are patterns used to select HTML elements for styling. They can target elements by tag, class, ID, attributes, and relationships.',
+            code: '/* Element selector */\np { color: blue; }\n\n/* Class selector */\n.highlight { background: yellow; }\n\n/* ID selector */\n#header { padding: 20px; }\n\n/* Attribute selector */\ninput[type="text"] { border: 1px solid #ccc; }',
+            lang: 'css'
+          },
+          {
+            name: 'Flexbox Layout',
+            content: 'Flexbox is a powerful layout tool that makes it easy to design flexible responsive layouts without using floats or positioning.',
+            code: '.container {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  gap: 1rem;\n}\n\n.item {\n  flex: 1;\n  min-width: 200px;\n}',
+            lang: 'css'
+          },
+          {
+            name: 'Common Interview Questions',
+            qa: [
+              { q: 'What is the CSS Box Model?', a: 'The Box Model consists of content, padding, border, and margin layers that surround an element.' },
+              { q: 'Explain CSS specificity.', a: 'Specificity determines which CSS rule applies when multiple rules target the same element. Inline styles > IDs > Classes/Attributes > Elements.' },
+              { q: 'What is the difference between relative and absolute positioning?', a: 'Relative positioning moves an element relative to its normal position, while absolute positioning removes it from document flow and positions it relative to the nearest positioned ancestor.' }
+            ]
+          }
+        ]
+      },
+      js: {
+        title: 'JavaScript Fundamentals',
+        sections: [
+          {
+            name: 'Variables and Data Types',
+            content: 'JavaScript has dynamic typing with primitive types (string, number, boolean, null, undefined, symbol) and objects (arrays, functions, dates, etc.).',
+            code: 'let name = "John";      // String\nconst age = 30;         // Number\nvar isActive = true;    // Boolean\nlet skills = [];        // Array (Object)\nlet person = {};        // Object\nlet callback = () => {}; // Function',
+            lang: 'javascript'
+          },
+          {
+            name: 'Async/Await and Promises',
+            content: 'Promises represent the eventual completion of async operations. Async/await syntax provides a cleaner way to handle asynchronous code.',
+            code: 'const fetchData = async () => {\n  try {\n    const response = await fetch(\'/api/data\');\n    const data = await response.json();\n    return data;\n  } catch (error) {\n    console.error(error);\n  }\n};',
+            lang: 'javascript'
+          },
+          {
+            name: 'Common Interview Questions',
+            qa: [
+              { q: 'What is hoisting in JavaScript?', a: 'Hoisting is JS\'s default behavior of moving declarations to the top of scope. var and function declarations are hoisted; let/const are not initialized.' },
+              { q: 'Explain event delegation.', a: 'Event delegation uses event bubbling to handle events on parent elements instead of attaching listeners to many child elements.' },
+              { q: 'What are closures?', a: 'Closures are functions that have access to variables from their outer scope even after the outer function has returned.' }
+            ]
+          }
+        ]
+      },
+      py: {
+        title: 'Python Programming',
+        sections: [
+          {
+            name: 'Basic Syntax',
+            content: 'Python emphasizes readability with simple, clear syntax. Indentation is used to define code blocks instead of braces.',
+            code: 'def greet(name):\n    """Function documentation"""\n    message = f"Hello, {name}!"\n    return message\n\nresult = greet("World")\nprint(result)',
+            lang: 'python'
+          },
+          {
+            name: 'List Comprehensions',
+            content: 'List comprehensions provide a concise way to create new lists by filtering and transforming existing lists.',
+            code: '# Traditional approach\nresult = []\nfor i in range(10):\n    if i % 2 == 0:\n        result.append(i * 2)\n\n# List comprehension\nresult = [i * 2 for i in range(10) if i % 2 == 0]',
+            lang: 'python'
+          },
+          {
+            name: 'Common Interview Questions',
+            qa: [
+              { q: 'What is the difference between list and tuple?', a: 'Lists are mutable (can be changed) and use [], while tuples are immutable and use (). Tuples are faster and can be used as dictionary keys.' },
+              { q: 'Explain the GIL (Global Interpreter Lock).', a: 'The GIL allows only one thread to execute Python bytecode at a time, even on multi-core systems. It exists to simplify memory management.' },
+              { q: 'What are decorators in Python?', a: 'Decorators are functions that modify other functions or classes. They use the @ symbol and allow you to wrap functionality around existing code.' }
+            ]
+          }
+        ]
+      },
+      c: {
+        title: 'C Programming Essentials',
+        sections: [
+          {
+            name: 'Getting Started',
+            content: 'C is a compiled, procedural language that provides low-level memory access through pointers and is efficient for system programming.',
+            code: '#include <stdio.h>\n\nint main() {\n    printf("Hello, World!\\n");\n    return 0;\n}',
+            lang: 'c'
+          },
+          {
+            name: 'Pointers and Memory',
+            content: 'Pointers are variables that store memory addresses. They are fundamental to C programming for dynamic memory allocation and passing by reference.',
+            code: 'int x = 10;\nint *ptr = &x;  // Pointer to x\n\nprintf("Value: %d\\n", *ptr);    // Dereference\nprintf("Address: %p\\n", ptr);  // Print address\n\nint *arr = malloc(10 * sizeof(int));\nfree(arr);  // Free memory',
+            lang: 'c'
+          },
+          {
+            name: 'Common Interview Questions',
+            qa: [
+              { q: 'What is the difference between malloc and calloc?', a: 'malloc allocates memory but doesn\'t initialize it, while calloc allocates memory and initializes all bytes to zero.' },
+              { q: 'Explain struct vs union.', a: 'Structs allocate separate memory for each member, while unions share memory among members (only one can hold value at a time).' },
+              { q: 'What is a void pointer?', a: 'A void pointer (void*) is a generic pointer that can point to any data type. It requires explicit casting when dereferenced.' }
+            ]
+          }
+        ]
+      }
+    };
+
+    function showTopic(topicId) {
+      const topic = topics[topicId];
+      const contentDiv = document.getElementById('content');
+
+      let html = `<h2 style="margin-bottom:2rem; color:var(--primary);">${topic.title}</h2>`;
+
+      topic.sections.forEach((section, idx) => {
+        html += `<div class="glass-card" style="padding:2rem; margin-bottom:2rem; border-radius:var(--radius);">`;
+        html += `<h3 style="font-size:1.25rem; margin-bottom:1rem; color:var(--primary);">🔹 ${section.name}</h3>`;
+
+        if (section.content) {
+          html += `<p style="color:var(--fg-muted); line-height:1.8; margin-bottom:1rem;">${section.content}</p>`;
+        }
+
+        if (section.code) {
+          html += `
+            <div class="code-block" data-lang="${section.lang}">
+              <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+              <code>${section.code.split('<').join('&lt;').split('>').join('&gt;')}</code>
+            </div>
+          `;
+        }
+
+        if (section.qa) {
+          html += `<div style="margin-top:1.5rem;"><h4 style="margin-bottom:1rem; color:var(--primary);">Interview Questions</h4>`;
+          section.qa.forEach(item => {
+            html += `
+              <div style="margin-bottom:1rem; padding:1rem; background:rgba(56,189,248,0.05); border-left:3px solid var(--primary); border-radius:0.25rem;">
+                <p style="font-weight:600; margin-bottom:0.5rem;">Q: ${item.q}</p>
+                <p style="color:var(--fg-muted);">A: ${item.a}</p>
+              </div>
+            `;
+          });
+          html += '</div>';
+        }
+
+        html += '</div>';
+      });
+
+      contentDiv.innerHTML = html;
+    }
+
+    function copyCode(btn) {
+      const code = btn.nextElementSibling.textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        const original = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.textContent = original;
+        }, 2000);
+      });
+    }
+
+    // Show HTML by default
+    showTopic('html');
+  </script>
+</body>
+</html>

@@ -5,20 +5,63 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CodeMaster Arena - Quiz</title>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style-new.css">
   <link rel="icon" type="image/jpeg" href="CodeMaster Pro.jpeg">
+  <style>
+    .result-page {
+  position: relative;
+  overflow: hidden;
+}
+
+.result-page::before {
+
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(0,183,255,0.15),
+      transparent 30%
+    ),
+
+    radial-gradient(
+      circle at bottom right,
+      rgba(255,0,128,0.15),
+      transparent 30%
+    );
+
+  pointer-events:none;
+}
+
+    /* SVG arc animation keyframe — scoped to quiz */
+    @keyframes arcDraw {
+      from {
+        stroke-dashoffset: 10000;
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .result-arc-segment {
+      transform-origin: center;
+    }
+
+    /* Result page layout */
+    .result-page {
+      padding-bottom: 3rem;
+    }
+  </style>
 </head>
-<body>
+<body class="page-quiz">
+  <!-- data-lang is set by script.js based on selectedLang -->
+  <main id="app" style="max-width:800px; margin:0 auto; padding:2rem 1rem;" aria-live="polite"></main>
 
-  <header style="max-width:768px; margin:0 auto; padding: 1rem;">
-    <nav aria-label="Breadcrumb">
-      <button class="back-btn" onclick="window.location.href='Main.html'" aria-label="Go back to dashboard">← Back to Dashboard</button>
-    </nav>
-  </header>
-
-  <main id="app" style="max-width:768px; margin:0 auto; padding:2rem 1rem;" aria-live="polite"></main>
-
-<script src="script.js"></script>
-
+  <script src="auth.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeMaster - Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style-new.css">
+  <link rel="icon" type="image/jpeg" href="CodeMaster Pro.jpeg">
+  <style>
+    .avatar {
+
+  width: 140px;
+  height: 140px;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #00b7ff,
+      #7c3aed,
+      #ff0080,
+      #00ffaa
+    );
+
+  background-size: 300% 300%;
+
+  animation:
+    gradientFlow 6s ease infinite,
+    float 5s ease-in-out infinite;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:3.5rem;
+
+  margin:0 auto 1rem;
+
+  box-shadow:
+    0 0 40px rgba(0,183,255,0.25),
+    0 0 80px rgba(255,0,128,0.2);
+
+  position:relative;
+}
+
+.avatar::before {
+
+  content:"";
+
+  position:absolute;
+  inset:-8px;
+
+  border-radius:inherit;
+
+  background:inherit;
+
+  filter:blur(25px);
+
+  opacity:0.7;
+
+  z-index:-1;
+}
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .quiz-history {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .history-item {
+      padding: 1rem;
+      background: rgba(56, 189, 248, 0.05);
+      border-left: 3px solid var(--primary);
+      margin-bottom: 0.75rem;
+      border-radius: 0.25rem;
+    }
+
+    .history-item.perfect {
+      border-left-color: var(--success);
+    }
+
+    .history-item.good {
+      border-left-color: var(--primary);
+    }
+
+    .history-item.needs-work {
+      border-left-color: var(--warning);
+    }
+  </style>
+</head>
+<body class="page-profile">
+  <header class="navbar">
+    <div class="inner">
+      <div class="logo" onclick="window.location.href='Main.html'" role="link" aria-label="CodeMaster Pro Home" style="cursor:pointer;">
+        <span aria-hidden="true">👤</span> Profile
+      </div>
+      <nav class="nav-links" aria-label="Main Navigation">
+        <button class="nav-link-btn" onclick="window.location.href='Main.html'">
+          <span aria-hidden="true">🏠</span> <span class="label">Home</span>
+        </button>
+        <button class="nav-link-btn" onclick="window.location.href='Learn.html'">
+          <span aria-hidden="true">📚</span> <span class="label">Learn</span>
+        </button>
+        <button class="nav-link-btn active" onclick="window.location.href='Profile.html'">
+          <span aria-hidden="true">👤</span> <span class="label">Profile</span>
+        </button>
+        <button class="nav-link-btn" onclick="window.location.href='Leaderboard.html'">
+          <span aria-hidden="true">🏆</span> <span class="label">Leaderboard</span>
+        </button>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+        <button class="nav-link-btn" onclick="logout()" style="color:var(--danger);">
+          <span aria-hidden="true">🚪</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main style="max-width:1000px; margin:0 auto; padding:3rem 1rem;">
+    <div class="animate-slide-up">
+      <!-- User Profile Card -->
+      <div class="glass-card" style="padding:2rem; text-align:center; margin-bottom:2rem; border-radius:var(--radius);">
+        <div class="avatar" id="userAvatar">👤</div>
+        <h1 id="userName" style="font-size:2rem; margin-bottom:0.5rem; color:var(--primary);">User Name</h1>
+        <p id="userEmail" style="color:var(--fg-muted); font-family:var(--font-mono); margin-bottom:1.5rem;">user@chitkara.edu.in</p>
+        
+        <div style="display:flex; gap:1rem; justify-content:center; margin-bottom:1.5rem; flex-wrap:wrap;">
+          <div style="padding:0.75rem 1.5rem; background:rgba(56,189,248,0.1); border:1px solid var(--primary); border-radius:0.5rem;">
+            <p style="font-size:0.875rem; color:var(--fg-muted); margin-bottom:0.25rem;">Member Since</p>
+            <p id="joinDate" style="font-weight:700; color:var(--fg);">-</p>
+          </div>
+          <div style="padding:0.75rem 1.5rem; background:rgba(34,197,94,0.1); border:1px solid var(--success); border-radius:0.5rem;">
+            <p style="font-size:0.875rem; color:var(--fg-muted); margin-bottom:0.25rem;">Quizzes Completed</p>
+            <p id="quizzesCompleted" style="font-weight:700; color:var(--success);">0</p>
+          </div>
+          <div style="padding:0.75rem 1.5rem; background:rgba(168,85,247,0.1); border:1px solid #a855f7; border-radius:0.5rem;">
+            <p style="font-size:0.875rem; color:var(--fg-muted); margin-bottom:0.25rem;">Average Score</p>
+            <p id="averageScore" style="font-weight:700; color:#a855f7;">0%</p>
+          </div>
+        </div>
+
+        <button onclick="logout()" class="btn-primary" style="background:linear-gradient(90deg, #ef4444, #dc2626); border:none;">
+          🚪 Logout
+        </button>
+      </div>
+
+      <!-- Best Scores by Language -->
+      <div class="glass-card" style="padding:2rem; margin-bottom:2rem; border-radius:var(--radius);">
+        <h2 style="font-size:1.5rem; margin-bottom:1.5rem; color:var(--primary);">🏆 Best Scores</h2>
+        <div class="stat-row" id="bestScores">
+          <!-- Filled by JavaScript -->
+        </div>
+      </div>
+
+      <!-- Quiz History -->
+      <div class="glass-card" style="padding:2rem; border-radius:var(--radius);">
+        <h2 style="font-size:1.5rem; margin-bottom:1.5rem; color:var(--primary);">📋 Recent Quizzes</h2>
+        <div class="quiz-history" id="quizHistory">
+          <p style="color:var(--fg-muted); text-align:center; padding:2rem;">No quizzes taken yet. Start with a challenge!</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="auth.js"></script>
+  <script>
+    // Auth guard
+    if (!auth || !auth.isAuthenticated()) {
+      window.location.href = 'index.html';
+    }
+
+    const user = auth.getCurrentUser();
+    const languages = [
+      { id: 'html', name: 'HTML5', emoji: '🌐' },
+      { id: 'css', name: 'CSS3', emoji: '🎨' },
+      { id: 'js', name: 'JavaScript', emoji: '🟨' },
+      { id: 'py', name: 'Python', emoji: '🐍' },
+      { id: 'c', name: 'C', emoji: '🔵' }
+    ];
+
+    function logout() {
+      auth.logout();
+      window.location.href = 'index.html';
+    }
+
+    function getGenderEmoji(gender) {
+      switch(gender?.toLowerCase()) {
+        case 'male': return '👨';
+        case 'female': return '👩';
+        case 'other': return '🧑';
+        default: return '👤';
+      }
+    }
+
+    function getAllQuizzes() {
+      let allQuizzes = [];
+      languages.forEach(lang => {
+        const key = `codemaster_leaderboard_${lang.id}`;
+        const quizzes = JSON.parse(localStorage.getItem(key) || '[]');
+        const userQuizzes = quizzes.filter(q => q.email === user.email);
+        allQuizzes = allQuizzes.concat(userQuizzes.map(q => ({
+          ...q,
+          langEmoji: lang.emoji,
+          langName: lang.name
+        })));
+      });
+      return allQuizzes.sort((a, b) => new Date(b.date) - new Date(a.date));
+    }
+
+    function getBestScores() {
+      const scores = {};
+      languages.forEach(lang => {
+        const key = `codemaster_best_${user.email}_${lang.id}`;
+        const best = localStorage.getItem(key);
+        if (best) {
+          scores[lang.id] = {
+            name: lang.name,
+            emoji: lang.emoji,
+            score: parseInt(best, 10)
+          };
+        }
+      });
+      return scores;
+    }
+
+    function initializeProfile() {
+      // Set user info
+      document.getElementById('userName').textContent = user.name;
+      document.getElementById('userEmail').textContent = user.email;
+      document.getElementById('userAvatar').textContent = getGenderEmoji(user.gender);
+
+      // Join date (from session or approximate)
+      const joinDate = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      document.getElementById('joinDate').textContent = joinDate;
+
+      // Get all quizzes
+      const allQuizzes = getAllQuizzes();
+      document.getElementById('quizzesCompleted').textContent = allQuizzes.length;
+
+      // Calculate average score
+      if (allQuizzes.length > 0) {
+        const avgScore = Math.round(allQuizzes.reduce((sum, q) => sum + q.scorePercentage, 0) / allQuizzes.length);
+        document.getElementById('averageScore').textContent = `${avgScore}%`;
+      }
+
+      // Best scores
+      const bestScores = getBestScores();
+      const bestScoresDiv = document.getElementById('bestScores');
+      if (Object.keys(bestScores).length > 0) {
+        bestScoresDiv.innerHTML = Object.entries(bestScores).map(([langId, data]) => {
+          const percentage = data.score;
+          const color = percentage >= 80 ? 'var(--success)' : percentage >= 60 ? 'var(--primary)' : 'var(--warning)';
+          return `
+            <div class="stat-card">
+              <p style="font-size:2rem; margin-bottom:0.5rem;">${data.emoji}</p>
+              <p style="font-weight:600; margin-bottom:0.25rem;">${data.name}</p>
+              <p style="font-size:1.75rem; font-weight:700; color:${color};">${percentage}%</p>
+            </div>
+          `;
+        }).join('');
+      } else {
+        bestScoresDiv.innerHTML = '<p style="color:var(--fg-muted); text-align:center; grid-column:1/-1;">No scores yet. Complete a quiz to see your best scores!</p>';
+      }
+
+      // Quiz history
+      const quizHistoryDiv = document.getElementById('quizHistory');
+      if (allQuizzes.length > 0) {
+        quizHistoryDiv.innerHTML = allQuizzes.slice(0, 20).map(quiz => {
+          const percentage = quiz.scorePercentage;
+          const level = percentage >= 80 ? 'perfect' : percentage >= 60 ? 'good' : 'needs-work';
+          const icon = percentage >= 80 ? '🌟' : percentage >= 60 ? '⭐' : '📚';
+          const formattedDate = new Date(quiz.date).toLocaleDateString();
+          
+          return `
+            <div class="history-item ${level}">
+              <div style="display:flex; justify-content:space-between; align-items:start;">
+                <div>
+                  <p style="font-weight:600; margin-bottom:0.25rem;">${icon} ${quiz.langEmoji} ${quiz.langName}</p>
+                  <p style="font-size:0.875rem; color:var(--fg-muted);">${formattedDate}</p>
+                </div>
+                <p style="font-size:1.25rem; font-weight:700; color:${percentage >= 80 ? 'var(--success)' : percentage >= 60 ? 'var(--primary)' : 'var(--warning)'};">${percentage}%</p>
+              </div>
+              <p style="font-size:0.75rem; color:var(--fg-muted); margin-top:0.5rem;">${quiz.score}/${quiz.total} correct (${quiz.mode || 'easy'} mode)</p>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    // Initialize on load
+    initializeProfile();
+  </script>
+</body>
+</html>
