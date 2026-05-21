@@ -59,13 +59,13 @@ Stores the global registry of all profile registrations local to the browser cli
 ## FILES 
 
 # CodeMaster Gamified Logic Arena/
-├── About.html          # Info page detailing rules, platform mechanics, and references.
-├── CodeMaster Pro.jpeg # Branding identity asset used for layout images and favicons
-├── Leaderboard.html    # Global rankings hub featuring the top-100 table and 3D top-3 podium
-├── Learn.html          # Knowledge Matrix switcher hosting documentation and interview Q&As
-├── Profile.html        # Analytics panel rendering user stats and a 20-run scorecard history
-├── index.html          # Neural Registry UI gate handling login, signup, and domain lock
-├── Main.html           # Main Dashboard displaying language selection grids and best score badges
-├── Quiz.html           # Core Quiz Engine driving dynamic layout questions, timers, and reviews
-├── auth.js             # Core Kernel managing singletons: AuthSystem, ThemeManager, AudioSystem, AIVisualEngine
-└── style-new.css       # Style Matrix organizing glassmorphism, visual design layers, themes, and keyframes
+├── About.html          # Info page detailing rules, platform mechanics, and references.\
+├── CodeMaster Pro.jpeg # Branding identity asset used for layout images and favicons\
+├── Leaderboard.html    # Global rankings hub featuring the top-100 table and 3D top-3 podium\
+├── Learn.html          # Knowledge Matrix switcher hosting documentation and interview Q&As\
+├── Profile.html        # Analytics panel rendering user stats and a 20-run scorecard history\
+├── index.html          # Neural Registry UI gate handling login, signup, and domain lock\
+├── Main.html           # Main Dashboard displaying language selection grids and best score badges\
+├── Quiz.html           # Core Quiz Engine driving dynamic layout questions, timers, and reviews\
+├── auth.js             # Core Kernel managing singletons: AuthSystem, ThemeManager, AudioSystem, AIVisualEngine\
+└── style-new.css       # Style Matrix organizing glassmorphism, visual design layers, themes, and keyframes\
