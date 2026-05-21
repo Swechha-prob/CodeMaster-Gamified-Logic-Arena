@@ -2,6 +2,8 @@
 
 Cyberpunk-themed quiz app to practice programming basics. Made with HTML/CSS/JS on the frontend and a local relational engine managing client-side data state structures.
 
+**Live Frontend:** "https://code-master-gamified-logic-arena.vercel.app"
+
 ![CodeMaster Pro Logo](CodeMaster%20Pro.jpeg)
 
 ---
